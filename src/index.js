@@ -58,6 +58,7 @@ export default class Listing extends Component {
     this.error = this.error.bind(this)
     this.complete = this.complete.bind(this)
     this.handleRowSort = this.handleRowSort.bind(this)
+    this.finish = this.finish.bind(this)
   }
 
   componentDidMount() {
