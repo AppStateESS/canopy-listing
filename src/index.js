@@ -59,6 +59,7 @@ export default class Listing extends Component {
     this.complete = this.complete.bind(this)
     this.handleRowSort = this.handleRowSort.bind(this)
     this.finish = this.finish.bind(this)
+    this.content = this.content.bind(this)
   }
 
   componentDidMount() {
@@ -195,11 +196,16 @@ export default class Listing extends Component {
       dataType: 'json',
       type: 'get',
       success: (data) => {
-        this.setState({listing: data.listing, loading: false})
+        if (data.listing !== undefined) {
+          this.setState({listing: data.listing, loading: false})
+        } else {
+          this.setState({loading: false})
+          this.setMessage('Problem accessing server')
+        }
       },
       error: () => {
         this.setState({loading: false})
-        this.setMessage('Could not access server')
+        this.setMessage('Problem accessing server')
       }
     })
   }
@@ -364,7 +370,7 @@ export default class Listing extends Component {
   /* Extended function should do actual work. This is a stub. */
 
   handleRowSort({oldIndex, newIndex}) {
-    console.log(`moving ${oldIndex} to ${newIndex}`)
+    alert(`Row sorting handle has not been set: ${oldIndex} to ${newIndex}`)
   }
 
   content() {
