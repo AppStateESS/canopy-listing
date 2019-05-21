@@ -46,7 +46,7 @@ module.exports = (env, argv) => {
   }
   
   if (inDevelopment) {
-    settings.devtool = 'source-map'
+    settings.devtool = 'inline-source-map'
   }
   return settings
 }
