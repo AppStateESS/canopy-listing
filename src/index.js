@@ -346,7 +346,7 @@ export default class Listing extends Component {
       width = overlay.width
     }
 
-    let title
+    let title = ''
     if (overlay.title) {
       title = overlay.title
     }
@@ -360,13 +360,12 @@ export default class Listing extends Component {
     } else {
       close = this.overlayOff
     }
-
     return (
       <Overlay show={this.state.overlay} width={width} title={title} close={close}>{overlay.content}</Overlay>
     )
 
   }
-
+  
   /* Extended function should do actual work. This is a stub. */
 
   handleRowSort({oldIndex, newIndex}) {
