@@ -36,9 +36,7 @@ export default class Listing extends Component {
       resource: {}
     }
     this.allowSort = false
-    this.module = 'module'
-    this.role = 'role'
-    this.control = 'control'
+    this.restUrl = 'Module/Control/'
     this.label = 'label'
     this.sortBy = null
     this.sortByDir = 0
@@ -104,7 +102,7 @@ export default class Listing extends Component {
     const resource = this.state.listing[key]
     if (confirm('Are you sure you want to delete this item along with all its content?')) {
       $.ajax({
-        url: this.getUrl() + '/' + resource.id,
+        url: this.restUrl + '/' + resource.id,
         dataType: 'json',
         type: 'delete',
         success: () => {
@@ -165,10 +163,11 @@ export default class Listing extends Component {
   }
 
   getUrl() {
-    return `${this.module}/${this.role}/${this.control}`
+    return this.restUrl
   }
 
   load(otherData = {}) {
+    this.setState({loading: true})
     let sortByDir
     switch (this.sortByDir) {
       case 1:
@@ -183,7 +182,7 @@ export default class Listing extends Component {
         sortByDir = null
     }
 
-    const url = this.getUrl()
+    const url = this.restUrl
     const data = {
       search: this.state.search,
       sortBy: this.sortBy,
@@ -224,7 +223,7 @@ export default class Listing extends Component {
 
   save() {
     let type = 'post'
-    let url = this.getUrl()
+    let url = this.restUrl
     if (this.state.resource.id !== '0') {
       url = url + '/' + this.state.resource.id
       type = 'put'
@@ -328,7 +327,7 @@ export default class Listing extends Component {
       leftSide={this.navLeft()}
       rightSide={[search]}
       background="light"
-      className="border rounded mb-3"/>
+      className="border rounded mb-3 p-0"/>
   }
 
   title() {
