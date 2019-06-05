@@ -12,49 +12,49 @@ import Listing from '@essappstate/canopy-listing'
 import PetForm from './PetForm'
 
 class PetListingClass extends Listing {
-	constructor(props) {
-		super(props)
-		this.restUrl = 'mycanopymodule/Admin/Pets/'
-		this.label = 'Pets'
-		this.defaultResource = {
-			id: '0',
-			petName: '',
-		}
-		
-		// callback is not required
-		this.columns = [
-			{
-				column: 'options',
-				callback: (row, key) => {
-					return (
-						<a href="#" onClick={
-							this.editResource.bind(this, key)
-						}>Edit</a>
-					)
-				}
-			},
-			{
-				column: 'petName',
-				label: 'Pet name',
-				callback: (value, key) => return (
-					<a href="#">{value.petName}</a>),
-				style: {width: '10%'}
-			}
-		]
-		this.state.resource = Object.assign({}, this.defaultResource)
+  constructor(props) {
+    super(props)
+    this.restUrl = 'mycanopymodule/Admin/Pets/'
+    this.label = 'Pets'
+    this.defaultResource = {
+      id: '0',
+      petName: '',
+    }
+    
+    // callback is not required
+    this.columns = [
+      {
+        column: 'options',
+        callback: (row, key) => {
+          return (
+            <a href="#" onClick={
+              this.editResource.bind(this, key)
+            }>Edit</a>
+          )
+        }
+      },
+      {
+        column: 'petName',
+        label: 'Pet name',
+        callback: (value, key) => return (
+          <a href="#">{value.petName}</a>),
+        style: {width: '10%'}
+      }
+    ]
+    this.state.resource = Object.assign({}, this.defaultResource)
     }
     
     // not required
     title() {
-    		return <h2>My Pets</h2>
+        return <h2>My Pets</h2>
     }
     
     
     overlay() {
-    		return {
-    			content: <PetForm resource={this.state.resource}/>,
-    			close: this.load
-    		}
+        return {
+          content: <PetForm resource={this.state.resource}/>,
+          close: this.load
+        }
     }
 }
 
