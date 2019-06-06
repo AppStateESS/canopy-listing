@@ -99,19 +99,23 @@ export default class Listing extends Component {
 
   deleteResource(key, e) {
     e.preventDefault()
-    const resource = this.state.listing[key]
     if (confirm('Are you sure you want to delete this item along with all its content?')) {
-      $.ajax({
-        url: this.restUrl + '/' + resource.id,
-        dataType: 'json',
-        type: 'delete',
-        success: () => {
-          this.setMessage(this.label + ' deleted.', 'success')
-          this.load()
-        },
-        error: data => this.error(data)
-      })
+      this.sendDelete(key)
     }
+  }
+
+  sendDelete(key) {
+    const resource = this.state.listing[key]
+    $.ajax({
+      url: this.restUrl + '/' + resource.id,
+      dataType: 'json',
+      type: 'delete',
+      success: () => {
+        this.setMessage(this.label + ' deleted.', 'success')
+        this.load()
+      },
+      error: data => this.error(data)
+    })
   }
 
   reset() {
@@ -364,7 +368,7 @@ export default class Listing extends Component {
     )
 
   }
-  
+
   /* Extended function should do actual work. This is a stub. */
 
   handleRowSort({oldIndex, newIndex}) {
