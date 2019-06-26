@@ -1,6 +1,6 @@
 {
   "name": "@essappstate/canopy-listing",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Listing framework for Canopy",
   "main": "build/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@essappstate/canopy-react-overlay": "^0.2.3",
-    "@essappstate/react-navbar": "^1.0.5",
+    "@essappstate/react-navbar": "^1.1.0",
     "@essappstate/react-waiting": "^1.0.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",

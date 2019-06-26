@@ -262,7 +262,8 @@ export default class Listing extends Component {
       this.load()
       this.setMessage(
         <div>
-          <i className="far fa-thumbs-up" />&nbsp;Save successful.
+          <i className="far fa-thumbs-up" />
+          &nbsp;Save successful.
         </div>,
         'success'
       )
@@ -270,8 +271,8 @@ export default class Listing extends Component {
     } else {
       this.setMessage(
         <div>
-          <i className="fas fa-exclamation-triangle" />&nbsp;Unable to save:{' '}
-          {data.error}
+          <i className="fas fa-exclamation-triangle" />
+          &nbsp;Unable to save: {data.error}
         </div>
       )
     }
@@ -286,8 +287,8 @@ export default class Listing extends Component {
     }
     this.setMessage(
       <div>
-        <i className="fas fa-exclamation-triangle" />&nbsp;An error occurred:{' '}
-        {message}
+        <i className="fas fa-exclamation-triangle" />
+        &nbsp;An error occurred: {message}
       </div>
     )
   }
@@ -324,15 +325,12 @@ export default class Listing extends Component {
   navbarButton() {
     const label = (
       <span>
-        <i className="fas fa-plus" />&nbsp;Create
+        <i className="fas fa-plus" />
+        &nbsp;Create
       </span>
     )
     const button = (
-      <NavbarButton
-        color="outline-primary"
-        label={label}
-        handleClick={this.create}
-      />
+      <NavbarButton color="success" label={label} handleClick={this.create} />
     )
     return button
   }
