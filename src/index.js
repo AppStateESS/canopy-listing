@@ -9,11 +9,11 @@ import './Listing.scss'
 
 export function debounce(fn, delay) {
   var timer = null
-  return function () {
+  return function() {
     var context = this,
       args = arguments
     clearTimeout(timer)
-    timer = setTimeout(function () {
+    timer = setTimeout(function() {
       fn.apply(context, args)
     }, delay)
   }
@@ -33,6 +33,7 @@ export default class Listing extends Component {
       message: null,
       messageType: 'danger',
       overlay: false,
+      overlayType: 'form',
       resource: {}
     }
     this.allowSort = false
@@ -71,13 +72,15 @@ export default class Listing extends Component {
   }
 
   create() {
-    this.setState(
-      {overlay: true, resource: Object.assign({}, this.defaultResource)}
-    )
+    this.setState({
+      overlay: true,
+      overlayType: 'form',
+      resource: Object.assign({}, this.defaultResource)
+    })
   }
 
-  overlayOn() {
-    this.setState({overlay: true, message: null})
+  overlayOn(overlayType = 'form') {
+    this.setState({overlay: true, overlayType, message: null})
   }
 
   overlayOff() {
@@ -86,20 +89,27 @@ export default class Listing extends Component {
 
   loadResource(key, callback = null) {
     const resource = Object.assign({}, this.state.listing[key])
-    this.setState({
-      resource
-    }, callback)
+    this.setState(
+      {
+        resource
+      },
+      callback
+    )
   }
 
   editResource(key, e) {
     e.preventDefault()
     this.loadResource(key)
-    this.overlayOn()
+    this.overlayOn('form')
   }
 
   deleteResource(key, e) {
     e.preventDefault()
-    if (confirm('Are you sure you want to delete this item along with all its content?')) {
+    if (
+      confirm(
+        'Are you sure you want to delete this item along with all its content?'
+      )
+    ) {
       this.sendDelete(key)
     }
   }
@@ -119,9 +129,10 @@ export default class Listing extends Component {
   }
 
   reset() {
-    this.setState(
-      {overlay: false, resource: Object.assign({}, this.defaultResource)}
-    )
+    this.setState({
+      overlay: false,
+      resource: Object.assign({}, this.defaultResource)
+    })
   }
 
   getSearch() {
@@ -129,9 +140,10 @@ export default class Listing extends Component {
       <NavbarSearch
         value={this.state.search}
         placeholder="Search"
-        onChange={(e) => {
+        onChange={e => {
           this.updateSearch(e.target.value)
-        }}/>
+        }}
+      />
     )
   }
 
@@ -198,7 +210,7 @@ export default class Listing extends Component {
       data: sendData,
       dataType: 'json',
       type: 'get',
-      success: (data) => {
+      success: data => {
         if (data.listing !== undefined) {
           this.setState({listing: data.listing, loading: false})
         } else {
@@ -250,14 +262,17 @@ export default class Listing extends Component {
       this.load()
       this.setMessage(
         <div>
-          <i className="far fa-thumbs-up"></i>&nbsp;Save successful.</div>,
+          <i className="far fa-thumbs-up" />&nbsp;Save successful.
+        </div>,
         'success'
       )
       this.reset()
     } else {
       this.setMessage(
         <div>
-          <i className="fas fa-exclamation-triangle"></i>&nbsp;Unable to save: {data.error}</div>
+          <i className="fas fa-exclamation-triangle" />&nbsp;Unable to save:{' '}
+          {data.error}
+        </div>
       )
     }
   }
@@ -271,7 +286,9 @@ export default class Listing extends Component {
     }
     this.setMessage(
       <div>
-        <i className="fas fa-exclamation-triangle"></i>&nbsp;An error occurred: {message}</div>
+        <i className="fas fa-exclamation-triangle" />&nbsp;An error occurred:{' '}
+        {message}
+      </div>
     )
   }
 
@@ -280,7 +297,9 @@ export default class Listing extends Component {
   }
 
   message() {
-    const cn = `fixed-message alert alert-${this.state.messageType} fade show alert-dismissible`
+    const cn = `fixed-message alert alert-${
+      this.state.messageType
+    } fade show alert-dismissible`
     if (this.state.message) {
       return (
         <div className={cn}>
@@ -305,10 +324,15 @@ export default class Listing extends Component {
   navbarButton() {
     const label = (
       <span>
-        <i className="fas fa-plus"></i>&nbsp;Create</span>
+        <i className="fas fa-plus" />&nbsp;Create
+      </span>
     )
     const button = (
-      <NavbarButton color="outline-primary" label={label} handleClick={this.create}/>
+      <NavbarButton
+        color="outline-primary"
+        label={label}
+        handleClick={this.create}
+      />
     )
     return button
   }
@@ -327,11 +351,14 @@ export default class Listing extends Component {
 
   navbar() {
     const search = this.getSearch()
-    return <Navbar
-      leftSide={this.navLeft()}
-      rightSide={[search]}
-      background="light"
-      className="border rounded mb-3 p-0"/>
+    return (
+      <Navbar
+        leftSide={this.navLeft()}
+        rightSide={[search]}
+        background="light"
+        className="border rounded mb-3 p-0"
+      />
+    )
   }
 
   title() {
@@ -364,9 +391,14 @@ export default class Listing extends Component {
       close = this.overlayOff
     }
     return (
-      <Overlay show={this.state.overlay} width={width} title={title} close={close}>{overlay.content}</Overlay>
+      <Overlay
+        show={this.state.overlay}
+        width={width}
+        title={title}
+        close={close}>
+        {overlay.content}
+      </Overlay>
     )
-
   }
 
   /* Extended function should do actual work. This is a stub. */
@@ -377,13 +409,19 @@ export default class Listing extends Component {
 
   content() {
     if (this.state.loading) {
-      return <div><Waiting/></div>
+      return (
+        <div>
+          <Waiting />
+        </div>
+      )
     }
     if (this.state.listing.length === 0) {
       const content = []
       content.push(<span key="1">No {this.label.toLowerCase()}s found.</span>)
       if (this.state.search.length > 0) {
-        content.push(<span key="2">&nbsp;You may want to broaden your search.</span>)
+        content.push(
+          <span key="2">&nbsp;You may want to broaden your search.</span>
+        )
       }
       return content
     }
@@ -399,7 +437,8 @@ export default class Listing extends Component {
         currentSort={{
           sortBy: this.sortBy,
           sortByDir: this.sortByDir
-        }}/>
+        }}
+      />
     )
   }
 
