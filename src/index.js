@@ -34,7 +34,10 @@ export default class Listing extends Component {
       messageType: 'danger',
       overlay: false,
       overlayType: 'form',
-      resource: {}
+      resource: {},
+      limit: 10,
+      offset: 0,
+      more: false
     }
     this.allowSort = false
     this.restUrl = 'Module/Control/'
@@ -59,6 +62,7 @@ export default class Listing extends Component {
     this.handleRowSort = this.handleRowSort.bind(this)
     this.finish = this.finish.bind(this)
     this.content = this.content.bind(this)
+    this.moreRows = this.moreRows.bind(this)
   }
 
   componentDidMount() {
@@ -148,7 +152,7 @@ export default class Listing extends Component {
   }
 
   updateSearch(search) {
-    this.setState({search})
+    this.setState({search, offset: 0})
 
     if (search.length > 2 || search.length === 0) {
       this.delayLoad()
@@ -174,8 +178,7 @@ export default class Listing extends Component {
       this.sortByDir = 1
       this.sortBy = column
     }
-
-    this.load()
+    this.setState({offset: 0}, this.load)
   }
 
   getUrl() {
@@ -200,6 +203,8 @@ export default class Listing extends Component {
 
     const url = this.restUrl
     const data = {
+      offset: this.state.offset,
+      limit: this.state.limit,
       search: this.state.search,
       sortBy: this.sortBy,
       sortByDir: sortByDir
@@ -212,7 +217,19 @@ export default class Listing extends Component {
       type: 'get',
       success: data => {
         if (data.listing !== undefined) {
-          this.setState({listing: data.listing, loading: false})
+          let more = false
+          if (data.more !== undefined) {
+            more = data.more
+          }
+          if (this.state.offset === 0) {
+            this.setState({listing: data.listing, loading: false, more})
+          } else {
+            this.setState({
+              listing: this.state.listing.concat(data.listing),
+              loading: false,
+              more
+            })
+          }
         } else {
           this.setState({loading: false})
           this.setMessage('Problem accessing server')
@@ -405,6 +422,11 @@ export default class Listing extends Component {
     alert(`Row sorting handle has not been set: ${oldIndex} to ${newIndex}`)
   }
 
+  moreRows() {
+    const {offset} = this.state
+    this.setState({offset: offset + 1}, this.load)
+  }
+
   content() {
     if (this.state.loading) {
       return (
@@ -423,20 +445,28 @@ export default class Listing extends Component {
       }
       return content
     }
+    const button = (
+      <button className="btn btn-outline-dark" onClick={this.moreRows}>
+        Show more
+      </button>
+    )
     return (
-      <Grid
-        listing={this.state.listing}
-        handleRowSort={this.handleRowSort}
-        allowSort={this.allowSort}
-        edit={this.editResource}
-        contextMenu={this.contextMenu}
-        columns={this.columns}
-        sortFunction={this.sortByColumn}
-        currentSort={{
-          sortBy: this.sortBy,
-          sortByDir: this.sortByDir
-        }}
-      />
+      <div>
+        <Grid
+          listing={this.state.listing}
+          handleRowSort={this.handleRowSort}
+          allowSort={this.allowSort}
+          edit={this.editResource}
+          contextMenu={this.contextMenu}
+          columns={this.columns}
+          sortFunction={this.sortByColumn}
+          currentSort={{
+            sortBy: this.sortBy,
+            sortByDir: this.sortByDir
+          }}
+        />
+        {this.state.more ? button : null}
+      </div>
     )
   }
 
