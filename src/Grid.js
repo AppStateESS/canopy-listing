@@ -5,9 +5,16 @@ import GridHeader from './GridHeader'
 import {SortableElement, SortableContainer} from 'react-sortable-hoc'
 import './grid.scss'
 
-const Grid = ({listing, columns, sortFunction, currentSort, allowSort, handleRowSort}) => {
+const Grid = ({
+  listing,
+  columns,
+  sortFunction,
+  currentSort,
+  allowSort,
+  handleRowSort
+}) => {
   const sortIconTrack = {}
-  columns.forEach((value) => {
+  columns.forEach(value => {
     sortIconTrack[value.column] = 0
   })
   if (currentSort.sortBy) {
@@ -20,12 +27,24 @@ const Grid = ({listing, columns, sortFunction, currentSort, allowSort, handleRow
 
   if (allowSort) {
     tbody = (
-      <SortableList axis="y" lockAxis="y" pressDelay={200} items={listing} helperClass="grid-row-sort-move" onSortEnd={handleRowSort} columns={columns}/>
+      <SortableList
+        axis="y"
+        lockAxis="y"
+        pressDelay={200}
+        items={listing}
+        helperClass="grid-row-sort-move"
+        onSortEnd={handleRowSort}
+        columns={columns}
+      />
     )
   } else {
     let rows = listing.map((resource, key) => {
       let tdStack = buildTdColumns(resource, columns, key)
-      return <tr className="grid-row" key={key}>{tdStack}</tr>
+      return (
+        <tr className="grid-row" key={key}>
+          {tdStack}
+        </tr>
+      )
     })
     tbody = <tbody>{rows}</tbody>
   }
@@ -37,7 +56,8 @@ const Grid = ({listing, columns, sortFunction, currentSort, allowSort, handleRow
           <GridHeader
             columns={columns}
             sortFunction={sortFunction}
-            sortIconTrack={sortIconTrack}/>
+            sortIconTrack={sortIconTrack}
+          />
         </thead>
         {tbody}
       </table>
@@ -53,7 +73,7 @@ Grid.propTypes = {
   contextMenu: PropTypes.array,
   allowSort: PropTypes.bool,
   name: PropTypes.string,
-  handleRowSort: PropTypes.func,
+  handleRowSort: PropTypes.func
 }
 
 Grid.defaultProps = {
@@ -70,7 +90,11 @@ const buildTdColumns = (resource, columns, index) => {
     } else {
       columnContent = resource[value.column]
     }
-    return <td key={subkey} className={value.className}>{columnContent}</td>
+    return (
+      <td key={subkey} className={value.className}>
+        {columnContent}
+      </td>
+    )
   })
   return tdStack
 }
@@ -82,7 +106,7 @@ const SortableItem = SortableElement(({value}) => {
 const SortableList = SortableContainer(({items, columns}) => {
   let rows = items.map((resource, index) => {
     let tdStack = buildTdColumns(resource, columns, index)
-    return <SortableItem key={`item-${index}`} index={index} value={tdStack}/>
+    return <SortableItem key={`item-${index}`} index={index} value={tdStack} />
   })
-  return (<tbody>{rows}</tbody>)
+  return <tbody>{rows}</tbody>
 })
