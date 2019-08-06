@@ -14,6 +14,9 @@ const Grid = ({
   handleRowSort
 }) => {
   const sortIconTrack = {}
+  if (columns === undefined || columns.length === 0) {
+    throw 'No columns set for Grid'
+  }
   columns.forEach(value => {
     sortIconTrack[value.column] = 0
   })
@@ -91,7 +94,7 @@ const buildTdColumns = (resource, columns, index) => {
       columnContent = resource[value.column]
     }
     return (
-      <td key={subkey} className={value.className}>
+      <td key={subkey} className={value.className} style={value.style}>
         {columnContent}
       </td>
     )
