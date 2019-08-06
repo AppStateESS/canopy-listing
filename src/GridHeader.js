@@ -39,7 +39,7 @@ const GridHeader = ({columns, sortFunction, sortIconTrack}) => {
       </th>
     )
   })
-  return <tr key={1}>{th}</tr>
+  return <tr>{th}</tr>
 }
 
 GridHeader.propTypes = {
