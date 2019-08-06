@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        'react': path.resolve(__dirname, './node_modules/react'),
+        react: path.resolve(__dirname, './node_modules/react'),
         'react-dom': path.resolve(__dirname, './node_modules/react-dom')
       }
     },
@@ -22,15 +22,17 @@ module.exports = (env, argv) => {
         {
           test: /\.s?css$/,
           use: [
-            "style-loader",
-            "css-loader", {
-              loader: "sass-loader",
+            'style-loader',
+            'css-loader',
+            {
+              loader: 'sass-loader',
               options: {
-                implementation: require("dart-sass")
+                implementation: require('sass')
               }
             }
           ]
-        }, {
+        },
+        {
           test: /\.jsx?/,
           resolve: {
             extensions: ['.js', '.jsx']
@@ -44,7 +46,7 @@ module.exports = (env, argv) => {
       ]
     }
   }
-  
+
   if (inDevelopment) {
     settings.devtool = 'inline-source-map'
   }
