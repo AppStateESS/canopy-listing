@@ -13,14 +13,14 @@ const GridHeader = ({columns, sortFunction, sortIconTrack}) => {
       className.push('pointer')
       handle = sortFunction.bind(null, value.column)
       if (sortIconTrack[value.column] === 1) {
-        icon = <FontAwesomeIcon icon={faCaretUp} transform="up-4"/>
+        icon = <FontAwesomeIcon icon={faCaretUp} transform="up-4" />
       } else if (sortIconTrack[value.column] === 2) {
-        icon = <FontAwesomeIcon icon={faCaretDown} transform="down-4"/>
+        icon = <FontAwesomeIcon icon={faCaretDown} transform="down-4" />
       } else {
         icon = (
           <span className="fa-layers fa-fw">
-            <FontAwesomeIcon icon={faCaretUp} transform="up-4"/>
-            <FontAwesomeIcon icon={faCaretDown} transform="down-4"/>
+            <FontAwesomeIcon icon={faCaretUp} transform="up-4" />
+            <FontAwesomeIcon icon={faCaretDown} transform="down-4" />
           </span>
         )
       }
@@ -34,11 +34,12 @@ const GridHeader = ({columns, sortFunction, sortIconTrack}) => {
       style = value.style
     }
     return (
-      <th style={style} className={className} key={key} onClick={handle}>{value.label}&nbsp;{icon}
+      <th style={style} className={className} key={key} onClick={handle}>
+        {value.label}&nbsp;{icon}
       </th>
     )
   })
-  return <tr>{th}</tr>
+  return <tr key={1}>{th}</tr>
 }
 
 GridHeader.propTypes = {
