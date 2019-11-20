@@ -43,8 +43,9 @@ const Grid = ({
   } else {
     let rows = listing.map((resource, key) => {
       let tdStack = buildTdColumns(resource, columns, key)
+      const index = resource.id !== undefined ? resource.id : key
       return (
-        <tr className="grid-row" key={key}>
+        <tr className="grid-row" key={index}>
           {tdStack}
         </tr>
       )
