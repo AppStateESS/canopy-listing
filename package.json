@@ -29,10 +29,10 @@
     "react-dom": "^16.6.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
-    "@essappstate/canopy-react-overlay": "^0.2.5",
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@essappstate/canopy-react-overlay": "^0.2.6",
     "@essappstate/react-navbar": "^1.1.0",
     "@essappstate/react-waiting": "^1.0.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
