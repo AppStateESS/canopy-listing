@@ -257,7 +257,8 @@ export default class Listing extends Component {
   save() {
     let type = 'post'
     let url = this.restUrl
-    if (this.state.resource.id !== '0') {
+    let resourceId = parseInt(this.state.resource.id)
+    if (resourceId !== 0) {
       url = url + '/' + this.state.resource.id
       type = 'put'
     }
@@ -315,9 +316,7 @@ export default class Listing extends Component {
   }
 
   message() {
-    const cn = `fixed-message alert alert-${
-      this.state.messageType
-    } fade show alert-dismissible`
+    const cn = `fixed-message alert alert-${this.state.messageType} fade show alert-dismissible`
     if (this.state.message) {
       return (
         <div className={cn}>
@@ -396,6 +395,11 @@ export default class Listing extends Component {
       title = overlay.title
     }
 
+    let cname = ''
+    if (overlay.cname) {
+      cname = overlay.cname
+    }
+
     let close
     if (overlay.close) {
       close = () => {
@@ -410,6 +414,7 @@ export default class Listing extends Component {
         show={this.state.overlay}
         width={width}
         title={title}
+        cname={cname}
         close={close}>
         {overlay.content}
       </Overlay>
