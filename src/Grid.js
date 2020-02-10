@@ -110,7 +110,10 @@ const SortableItem = SortableElement(({value}) => {
 const SortableList = SortableContainer(({items, columns}) => {
   let rows = items.map((resource, index) => {
     let tdStack = buildTdColumns(resource, columns, index)
-    return <SortableItem key={`item-${index}`} index={index} value={tdStack} />
+    const itemkey = resource.id !== undefined ? resource.id : index
+    return (
+      <SortableItem key={`item-${itemkey}`} index={index} value={tdStack} />
+    )
   })
   return <tbody>{rows}</tbody>
 })

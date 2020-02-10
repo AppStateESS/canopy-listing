@@ -34,7 +34,7 @@ const GridHeader = ({columns, sortFunction, sortIconTrack}) => {
       style = value.style
     }
     return (
-      <th style={style} className={className} key={key} onClick={handle}>
+      <th style={style} className={className} key={`th${key}`} onClick={handle}>
         {value.label}&nbsp;{icon}
       </th>
     )
