@@ -1,6 +1,6 @@
 {
   "name": "@essappstate/canopy-listing",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Listing framework for Canopy",
   "main": "build/index.js",
   "scripts": {
@@ -29,25 +29,25 @@
     "react-dom": "^16.6.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "@essappstate/canopy-react-overlay": "^0.2.7",
     "@essappstate/react-navbar": "^1.1.0",
     "@essappstate/react-waiting": "^1.0.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
-    "@fortawesome/react-fontawesome": "^0.1.8",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-sortable-hoc": "^1.11.0",
-    "sass": "^1.25.0",
+    "sass": "^1.26.3",
     "sass-loader": "^7.3.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   }
 }

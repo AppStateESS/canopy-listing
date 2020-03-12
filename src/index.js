@@ -186,7 +186,7 @@ export default class Listing extends Component {
   }
 
   load(otherData = {}) {
-    this.setState({loading: true})
+    this.setState({loading: this.state.listing.length === 0})
     let sortByDir
     switch (this.sortByDir) {
       case 1:
