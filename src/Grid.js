@@ -2,22 +2,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GridHeader from './GridHeader'
-import {SortableElement, SortableContainer} from 'react-sortable-hoc'
 import './grid.scss'
 
-const Grid = ({
-  listing,
-  columns,
-  sortFunction,
-  currentSort,
-  allowSort,
-  handleRowSort
-}) => {
+const Grid = ({listing, columns, sortFunction, currentSort}) => {
   const sortIconTrack = {}
   if (columns === undefined || columns.length === 0) {
     throw 'No columns set for Grid'
   }
-  columns.forEach(value => {
+  columns.forEach((value) => {
     sortIconTrack[value.column] = 0
   })
   if (currentSort.sortBy) {
@@ -28,30 +20,16 @@ const Grid = ({
 
   let tbody
 
-  if (allowSort) {
-    tbody = (
-      <SortableList
-        axis="y"
-        lockAxis="y"
-        pressDelay={200}
-        items={listing}
-        helperClass="grid-row-sort-move"
-        onSortEnd={handleRowSort}
-        columns={columns}
-      />
+  let rows = listing.map((resource, key) => {
+    let tdStack = buildTdColumns(resource, columns, key)
+    const index = resource.id !== undefined ? resource.id : key
+    return (
+      <tr className="grid-row" key={index}>
+        {tdStack}
+      </tr>
     )
-  } else {
-    let rows = listing.map((resource, key) => {
-      let tdStack = buildTdColumns(resource, columns, key)
-      const index = resource.id !== undefined ? resource.id : key
-      return (
-        <tr className="grid-row" key={index}>
-          {tdStack}
-        </tr>
-      )
-    })
-    tbody = <tbody>{rows}</tbody>
-  }
+  })
+  tbody = <tbody>{rows}</tbody>
 
   return (
     <div>
@@ -75,13 +53,12 @@ Grid.propTypes = {
   sortFunction: PropTypes.func,
   currentSort: PropTypes.object,
   contextMenu: PropTypes.array,
-  allowSort: PropTypes.bool,
   name: PropTypes.string,
-  handleRowSort: PropTypes.func
+  handleRowSort: PropTypes.func,
 }
 
 Grid.defaultProps = {
-  contextMenu: null
+  contextMenu: null,
 }
 
 export default Grid
@@ -102,18 +79,3 @@ const buildTdColumns = (resource, columns, index) => {
   })
   return tdStack
 }
-
-const SortableItem = SortableElement(({value}) => {
-  return <tr className="grid-row-sort">{value}</tr>
-})
-
-const SortableList = SortableContainer(({items, columns}) => {
-  let rows = items.map((resource, index) => {
-    let tdStack = buildTdColumns(resource, columns, index)
-    const itemkey = resource.id !== undefined ? resource.id : index
-    return (
-      <SortableItem key={`item-${itemkey}`} index={index} value={tdStack} />
-    )
-  })
-  return <tbody>{rows}</tbody>
-})
