@@ -1,4 +1,4 @@
-/* global __dirname */
+/* global __dirname, module */
 const path = require('path')
 module.exports = (env, argv) => {
   const inDevelopment = argv.mode === 'development'
