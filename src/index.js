@@ -9,11 +9,11 @@ import './Listing.scss'
 
 export function debounce(fn, delay) {
   var timer = null
-  return function() {
+  return function () {
     var context = this,
       args = arguments
     clearTimeout(timer)
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       fn.apply(context, args)
     }, delay)
   }
@@ -37,7 +37,7 @@ export default class Listing extends Component {
       resource: {},
       limit: 10,
       offset: 0,
-      more: false
+      more: false,
     }
     this.allowSort = false
     this.restUrl = 'Module/Control/'
@@ -79,7 +79,7 @@ export default class Listing extends Component {
     this.setState({
       overlay: true,
       overlayType: 'form',
-      resource: Object.assign({}, this.defaultResource)
+      resource: Object.assign({}, this.defaultResource),
     })
   }
 
@@ -95,7 +95,7 @@ export default class Listing extends Component {
     const resource = Object.assign({}, this.state.listing[key])
     this.setState(
       {
-        resource
+        resource,
       },
       callback
     )
@@ -128,14 +128,14 @@ export default class Listing extends Component {
         this.setMessage(this.label + ' deleted.', 'success')
         this.load()
       },
-      error: data => this.error(data)
+      error: (data) => this.error(data),
     })
   }
 
   reset() {
     this.setState({
       overlay: false,
-      resource: Object.assign({}, this.defaultResource)
+      resource: Object.assign({}, this.defaultResource),
     })
   }
 
@@ -144,7 +144,10 @@ export default class Listing extends Component {
       <NavbarSearch
         value={this.state.search}
         placeholder="Search"
-        onChange={e => {
+        onClick={() => {
+          this.load()
+        }}
+        onChange={(e) => {
           this.updateSearch(e.target.value)
         }}
       />
@@ -207,7 +210,7 @@ export default class Listing extends Component {
       limit: this.state.limit,
       search: this.state.search,
       sortBy: this.sortBy,
-      sortByDir: sortByDir
+      sortByDir: sortByDir,
     }
     const sendData = Object.assign(otherData, data)
     $.ajax({
@@ -215,7 +218,7 @@ export default class Listing extends Component {
       data: sendData,
       dataType: 'json',
       type: 'get',
-      success: data => {
+      success: (data) => {
         if (data.listing !== undefined) {
           let more = false
           if (data.more !== undefined) {
@@ -227,7 +230,7 @@ export default class Listing extends Component {
             this.setState({
               listing: this.state.listing.concat(data.listing),
               loading: false,
-              more
+              more,
             })
           }
         } else {
@@ -238,7 +241,7 @@ export default class Listing extends Component {
       error: () => {
         this.setState({loading: false})
         this.setMessage('Problem accessing server')
-      }
+      },
     })
   }
 
@@ -266,12 +269,12 @@ export default class Listing extends Component {
       url,
       type,
       data: {
-        ...this.state.resource
+        ...this.state.resource,
       },
       dataType: 'json',
       success: this.success,
       error: this.error,
-      complete: this.complete
+      complete: this.complete,
     })
   }
 
@@ -467,7 +470,7 @@ export default class Listing extends Component {
           sortFunction={this.sortByColumn}
           currentSort={{
             sortBy: this.sortBy,
-            sortByDir: this.sortByDir
+            sortByDir: this.sortByDir,
           }}
         />
         {this.state.more ? button : null}
