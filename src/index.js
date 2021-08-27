@@ -188,7 +188,7 @@ export default class Listing extends Component {
     return this.restUrl
   }
 
-  load(otherData = {}) {
+  load(otherData = {}, onSuccess = null) {
     this.setState({loading: this.state.listing.length === 0})
     let sortByDir
     switch (this.sortByDir) {
@@ -236,6 +236,10 @@ export default class Listing extends Component {
         } else {
           this.setState({loading: false})
           this.setMessage('Problem accessing server')
+        }
+        if (onSuccess) {
+          console.log('running')
+          onSuccess(data)
         }
       },
       error: () => {
