@@ -1,6 +1,6 @@
 {
   "name": "@essappstate/canopy-listing",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Listing framework for Canopy",
   "main": "build/index.js",
   "scripts": {
